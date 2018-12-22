@@ -1,0 +1,8 @@
+<div class="container">
+  <div class="row" *ngFor="let todo of todos">
+    <div class="col-4">{{todo.description}}</div>
+    <div class="col-4">
+      <img class="img-fluid" [src]="todo.giphyUrl">
+    </div>
+  </div>
+</div>
