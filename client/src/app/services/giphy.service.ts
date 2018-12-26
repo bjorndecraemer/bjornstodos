@@ -1,6 +1,8 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs/operators";
+import {Todo} from "../todo/model/todo";
+import {Observable} from "rxjs";
 
 @Injectable()
 export class GiphyService {
@@ -11,14 +13,15 @@ export class GiphyService {
   constructor(public http: HttpClient) {
   }
 
-  get(searchTerm) {
-    const apiLink = this.giphyApi + searchTerm;
+  get(todo : Todo) : Observable<Todo> {
+    const apiLink = this.giphyApi + todo.description;
     return this.http.get(apiLink).pipe(map((response: any) => {
       if (response.data.length > 0) {
-        return response.data[0].images.original.url;
+        todo.giphyUrl = response.data[0].images.original.url;
       } else {
-        return 'https://media.giphy.com/media/YaOxRsmrv9IeA/giphy.gif'; // dancing cat for 404
+        todo.giphyUrl = 'https://media.giphy.com/media/YaOxRsmrv9IeA/giphy.gif'; // dancing cat for 404
       }
+      return todo;
     }));
   }
 }

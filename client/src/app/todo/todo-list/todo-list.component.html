@@ -1,8 +1,8 @@
 <div class="container">
-  <div class="row" *ngFor="let todo of todos">
+  <div class="row" *ngFor="let todo of todos$ | async">
     <div class="col-4">{{todo.description}}</div>
     <div class="col-4">
-      <img class="img-fluid" [src]="todo.giphyUrl">
+      <img class="img-fluid" alt="Missing image!" [src]="todo.giphyUrl">
     </div>
   </div>
 </div>
