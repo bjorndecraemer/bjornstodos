@@ -9,6 +9,7 @@ import {EffectsModule} from "@ngrx/effects";
 import {TodoService} from "../services/todo.service";
 import {TodoEffects} from "./todo.effects";
 import {GiphyService} from "../services/giphy.service";
+import {NavbarComponent} from "../navbar/navbar.component";
 
 export const todosRoutes: Routes = [
   {path: "",
@@ -23,7 +24,7 @@ export const todosRoutes: Routes = [
     StoreModule.forFeature('todos', todosReducer),
     EffectsModule.forFeature([TodoEffects])
   ],
-  declarations: [TodoListComponent],
+  declarations: [TodoListComponent, NavbarComponent],
   exports : [TodoListComponent],
   entryComponents: [TodoListComponent],
   providers: [TodoService, GiphyService]
