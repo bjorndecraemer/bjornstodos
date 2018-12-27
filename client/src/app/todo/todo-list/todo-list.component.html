@@ -1,8 +1,25 @@
-<div class="container">
-  <div class="row" *ngFor="let todo of todos$ | async">
-    <div class="col-4">{{todo.description}}</div>
-    <div class="col-4">
-      <img class="img-fluid" alt="Missing image!" [src]="todo.giphyUrl">
-    </div>
-  </div>
+<div class="container-fluid">
+      <div class="row">
+      <div class="card todoCard col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let todo of todos$ | async">
+        <div class="card-header row">
+          <div class=" col-11">
+          {{todo.title}}
+          </div>
+          <div class="col-1 deleteButtonDiv">
+            <button type="button" class="btn btn-danger todoRemove">X</button>
+          </div>
+
+        </div>
+      <img class="card-img-top" [src]="todo.giphyUrl" alt="Card image cap">
+      <div class="card-body">
+        <div class="card-text">{{todo.description}}</div>
+
+      </div>
+        <div class="card-footer">
+          <a class="btn btn-outline-primary todoEditButton todoButtons">Edit</a>
+          <a *ngIf="!todo.completed" class="btn btn-outline-success todoSuccesButton  todoButtons">Done</a>
+        </div>
+      </div>
+      </div>
 </div>
+

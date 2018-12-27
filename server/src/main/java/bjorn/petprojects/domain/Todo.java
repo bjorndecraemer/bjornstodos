@@ -20,7 +20,8 @@ public class Todo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String description;
+    private String title;
     private Date createdDate = new Date();
     private Date completedDate;
     private Boolean completed = false;

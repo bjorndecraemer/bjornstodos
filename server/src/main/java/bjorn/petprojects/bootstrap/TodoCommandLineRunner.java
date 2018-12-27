@@ -6,7 +6,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.stream.Stream;
 
 @Component
 public class TodoCommandLineRunner implements CommandLineRunner {
@@ -20,12 +19,26 @@ public class TodoCommandLineRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         System.out.print("Filling todo's ...");
-        Stream.of("Brush Puffy","Cuddle Chihiro","Clean Dishes","Call Kristel").forEach(name-> {
-            todoRepository.save(Todo.builder().name(name).createdDate(new Date()).build());
-        });
-        Stream.of("Brush Roger","Cuddle Jack").forEach(name-> {
-            todoRepository.save(Todo.builder().name(name).createdDate(new Date()).completedDate(new Date()).completed(true).build());
-        });
+
+        todoRepository.save(Todo.builder().title("Brush Puffy").description("Brush Puppy thoroughly").createdDate(new Date()).build());
+        todoRepository.save(Todo.builder().title("Cuddle Chihiro with a very long text").description("Cuddle Chihoro today, she needs it so bad!").createdDate(new Date()).build());
+        todoRepository.save(Todo.builder().title("Clean dishes").description("The dishes need cleaning, they are yucky!").createdDate(new Date()).build());
+        todoRepository.save(Todo.builder().title("Call Kristel").description("Call Kristel to plan our trip to San Diego").createdDate(new Date()).build());
+        todoRepository.save(Todo.builder()
+                .title("Brush Roger")
+                .description("Roger needs a good brushing")
+                .createdDate(new Date())
+                .completedDate(new Date())
+                .completed(true)
+                .build());
+        todoRepository.save(Todo.builder()
+                .title("Cuddle Jack")
+                .description("Jack needs a lot of cuddles, he needs constant re-assurance that mommy and daddy love him!")
+                .createdDate(new Date())
+                .completedDate(new Date())
+                .completed(true)
+                .build());
+
         System.out.println(" done!");
         todoRepository.findAll().forEach(System.out::println);
     }

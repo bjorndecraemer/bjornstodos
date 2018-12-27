@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+.card-header{
+  background-color: white;
+  border-bottom: none;
+}
+.todoRemove{
+  float: right;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.deleteButtonDiv{
+  padding-right: 0;
+}
+.todoEditButton{
+  float: left;
+}
+.todoSuccesButton{
+  float: right;
+}
+
+.card-text{
+  height: fit-content;
+}
