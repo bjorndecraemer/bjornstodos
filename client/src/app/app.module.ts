@@ -13,6 +13,7 @@ import {HomeComponent} from './home/home.component';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 
 const routes: Routes = [
@@ -34,6 +35,7 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
+    NgbModule,
     HttpClientModule,
     FontAwesomeModule,
     StoreModule.forRoot(reducers, {metaReducers}),
