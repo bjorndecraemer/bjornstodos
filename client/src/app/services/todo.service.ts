@@ -27,4 +27,8 @@ export class TodoService {
       )
     )
   }
+
+  public createNewTodo(todo : Todo) : Observable<Object>{
+    return this.http.post('http://localhost:8080/api/v1/todos/create',todo);
+  }
 }

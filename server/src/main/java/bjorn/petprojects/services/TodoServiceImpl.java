@@ -4,8 +4,10 @@ import bjorn.petprojects.api.v1.mappers.TodoMapper;
 import bjorn.petprojects.api.v1.model.TodoDTO;
 import bjorn.petprojects.domain.Todo;
 import bjorn.petprojects.repositories.TodoRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -33,6 +35,17 @@ public class TodoServiceImpl implements TodoService {
     public TodoDTO findById(Long id) {
         Optional<Todo> foundTodoOptional = todoRepository.findById(id);
         return foundTodoOptional.map(todoMapper::todoToTodoDTO).orElse(null);
+    }
+
+    @Override
+    public TodoDTO createNewTodo(TodoDTO todoDTO) {
+        return todoMapper.todoToTodoDTO(todoRepository.save(todoMapper.todoDTOToTodo(todoDTO)));
+    }
+
+    private TodoDTO readJSONWithObjectMapper(String json) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        TodoDTO todo = mapper.readValue(json, TodoDTO.class);
+        return todo;
     }
 
     @Override

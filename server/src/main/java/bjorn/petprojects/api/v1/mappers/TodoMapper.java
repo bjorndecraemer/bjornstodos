@@ -13,4 +13,5 @@ public interface TodoMapper {
     TodoMapper INSTANCE = Mappers.getMapper(TodoMapper.class);
 
     TodoDTO todoToTodoDTO(Todo todo);
+    Todo todoDTOToTodo(TodoDTO todoDTO);
 }

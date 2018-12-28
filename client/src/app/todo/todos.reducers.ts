@@ -16,11 +16,14 @@ export function todosReducer(state = initialTodosState, action: TodoActions) : T
   switch (action.type) {
     case TodoActionTypes.AllTodosLoaded :
       return adapter.addAll(action.payload.todos, {...state, allTodosLoaded : true});
+    case TodoActionTypes.TodoCreateDone :
+      return adapter.addOne( action.payload.todo,state);
     default : {
       return state;
     }
   }
 }
+
 
 export const {
   selectAll,

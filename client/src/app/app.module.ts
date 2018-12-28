@@ -10,7 +10,10 @@ import {metaReducers, reducers} from "./app.state";
 import {StoreRouterConnectingModule} from "@ngrx/router-store";
 import {RouterModule, Routes} from "@angular/router";
 import {HomeComponent} from './home/home.component';
-import {NavbarComponent} from './navbar/navbar.component';
+import {TodoFormComponent} from './todo/todo-form/todo-form.component';
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {library} from "@fortawesome/fontawesome-svg-core";
+import {faPlus} from "@fortawesome/free-solid-svg-icons";
 
 
 const routes: Routes = [
@@ -27,13 +30,13 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    NavbarComponent
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
     HttpClientModule,
+    FontAwesomeModule,
     StoreModule.forRoot(reducers, {metaReducers}),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([]),
@@ -42,4 +45,8 @@ const routes: Routes = [
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(){
+    library.add(faPlus);
+  }
+}
