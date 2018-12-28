@@ -4,7 +4,6 @@ import {routerReducer} from "@ngrx/router-store";
 import {storeFreeze} from "ngrx-store-freeze";
 
 export interface AppState{
-
 }
 
 export const reducers: ActionReducerMap<AppState> = {

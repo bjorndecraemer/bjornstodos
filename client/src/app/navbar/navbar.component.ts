@@ -2,9 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AppState} from "../app.state";
 import {Store} from "@ngrx/store";
-import {TodoCreateRequested} from "../todo/todo.actions";
+import {AllTodosRequested, TodoCreateRequested} from "../todo/todo.actions";
 import {TodoHelperService} from "../services/todo-helper.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {selectTodoControlsActive} from "../todo/todo.selectors";
 
 @Component({
   selector: 'app-navbar',
@@ -17,14 +18,17 @@ export class NavbarComponent implements OnInit {
   public readonly CANCEL_CLICK_NAME = "CANCEL_CLICK_BUTTON";
   public readonly CROSS_CLICK_NAME = "CROSS_CLICK_BUTTON";
 
-  closeResult: string;
   newTodoForm : FormGroup;
+  isNavbarCollapsed=true;
 
-  constructor(private store : Store<AppState>, private todoHelperService : TodoHelperService, private modalService : NgbModal) { }
 
   ngOnInit() {
     this.initForm();
+    this.store.dispatch(new AllTodosRequested());
   }
+
+  constructor(private store : Store<AppState>, private todoHelperService : TodoHelperService, private modalService : NgbModal) { }
+
 
   public onCreateNewTodo(){
     console.log("Create new pressed!",this.newTodoForm.value);

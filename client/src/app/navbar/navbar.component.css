@@ -1,0 +1,9 @@
+.newTodoGlyph{
+  margin: 4px 4px;
+  color: white;
+  padding-top: 5px;
+}
+.newTodoHeader{
+  color: white;
+  background-color: #dc3545;
+}

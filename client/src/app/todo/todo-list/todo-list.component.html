@@ -1,11 +1,12 @@
-<app-navbar></app-navbar>
 <div class="container-fluid">
       <div class="row">
       <div class="card todoCard col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let todo of todos$ | async">
         <div class="card-header row">
           <div class=" col-11">
+            <div class="card-text">{{todo.createdDate | date:'d/LL/yyyy H:mm'}}</div>
           {{todo.title}}
           </div>
+
           <div class="col-1 deleteButtonDiv">
             <button type="button" class="btn btn-danger todoRemove" (click)="deleteTodoPressed(todo.id)">X</button>
           </div>
@@ -15,6 +16,7 @@
       <div class="card-body">
         <div class="card-text">{{todo.description}}</div>
 
+        <div class="card-text" *ngIf="todo.completed">Completed on : {{todo.completedDate | date:'d/LL/yyyy H:mm'}}</div>
       </div>
         <div class="card-footer">
           <a class="btn btn-outline-primary todoEditButton todoButtons">Edit</a>

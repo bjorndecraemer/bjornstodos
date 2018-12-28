@@ -14,6 +14,8 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {NavbarComponent} from "./navbar/navbar.component";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 
 const routes: Routes = [
@@ -30,11 +32,14 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
+    ReactiveFormsModule,
+    FormsModule,
     NgbModule,
     HttpClientModule,
     FontAwesomeModule,
@@ -44,6 +49,7 @@ const routes: Routes = [
     StoreRouterConnectingModule.forRoot({stateKey: 'router'})
   ],
   providers: [],
+  exports : [NavbarComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

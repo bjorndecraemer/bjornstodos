@@ -1,8 +1,10 @@
 import {createFeatureSelector, createSelector} from "@ngrx/store";
 import * as fromTodo from "./todos.reducers";
 import {TodosState} from "./todos.reducers";
+import {AppState} from "../app.state";
 
 export const selectTodosState = createFeatureSelector<TodosState>('todos');
+export const selectAppRouterState = createFeatureSelector<AppState>('router');
 
 export const isLoading = createSelector(
   selectTodosState,

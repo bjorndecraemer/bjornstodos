@@ -9,7 +9,6 @@ import {EffectsModule} from "@ngrx/effects";
 import {TodoService} from "../services/todo.service";
 import {TodoEffects} from "./todo.effects";
 import {GiphyService} from "../services/giphy.service";
-import {NavbarComponent} from "../navbar/navbar.component";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
@@ -29,7 +28,7 @@ export const todosRoutes: Routes = [
     EffectsModule.forFeature([TodoEffects]),
     FontAwesomeModule
   ],
-  declarations: [TodoListComponent,NavbarComponent],
+  declarations: [TodoListComponent],
   exports : [TodoListComponent],
   entryComponents: [TodoListComponent],
   providers: [TodoService, GiphyService]
