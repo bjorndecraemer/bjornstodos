@@ -7,7 +7,7 @@
           {{todo.title}}
           </div>
           <div class="col-1 deleteButtonDiv">
-            <button type="button" class="btn btn-danger todoRemove">X</button>
+            <button type="button" class="btn btn-danger todoRemove" (click)="deleteTodoPressed(todo.id)">X</button>
           </div>
 
         </div>

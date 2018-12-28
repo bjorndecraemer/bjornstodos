@@ -57,4 +57,17 @@ public class TodoController {
     public ResponseEntity<TodoDTO> getTodoById(@PathVariable Long id){
         return new ResponseEntity<>(todoService.findById(id),HttpStatus.OK);
     }
+
+    @DeleteMapping("delete/{id}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<Long> deleteTodoById(@PathVariable Long id){
+        try {
+            todoService.deleteById(id);
+            return new ResponseEntity<>(id,HttpStatus.OK);
+            //return (ResponseEntity<Void>) ResponseEntity.status(HttpStatus.OK).;
+        }
+        catch(Exception e){
+            return new ResponseEntity<>(id,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

@@ -11,4 +11,5 @@ public interface TodoService {
     List<TodoDTO> findInCompleteTodos();
     TodoDTO findById(Long id);
     TodoDTO createNewTodo(TodoDTO todoDTO) throws IOException;
+    void deleteById(Long id);
 }

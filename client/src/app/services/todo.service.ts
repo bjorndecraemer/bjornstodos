@@ -35,4 +35,8 @@ export class TodoService {
   public enhanceTodoWithGiphy(todo : Todo) : Observable<Todo>{
     return this.giphyService.get(todo);
   }
+
+  public deleteTodoById(id : number) : Observable<Object>{
+    return this.http.delete('http://localhost:8080/api/v1/todos/delete/'+id);
+  }
 }

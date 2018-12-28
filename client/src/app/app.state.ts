@@ -3,7 +3,9 @@ import {environment} from "../environments/environment";
 import {routerReducer} from "@ngrx/router-store";
 import {storeFreeze} from "ngrx-store-freeze";
 
-export interface AppState{}
+export interface AppState{
+
+}
 
 export const reducers: ActionReducerMap<AppState> = {
   router : routerReducer

@@ -42,6 +42,11 @@ public class TodoServiceImpl implements TodoService {
         return todoMapper.todoToTodoDTO(todoRepository.save(todoMapper.todoDTOToTodo(todoDTO)));
     }
 
+    @Override
+    public void deleteById(Long id) {
+        todoRepository.deleteById(id);
+    }
+
     private TodoDTO readJSONWithObjectMapper(String json) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         TodoDTO todo = mapper.readValue(json, TodoDTO.class);

@@ -10,7 +10,6 @@ import {metaReducers, reducers} from "./app.state";
 import {StoreRouterConnectingModule} from "@ngrx/router-store";
 import {RouterModule, Routes} from "@angular/router";
 import {HomeComponent} from './home/home.component';
-import {TodoFormComponent} from './todo/todo-form/todo-form.component';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";

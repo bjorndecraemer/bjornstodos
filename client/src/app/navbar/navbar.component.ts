@@ -4,6 +4,7 @@ import {AppState} from "../app.state";
 import {Store} from "@ngrx/store";
 import {TodoCreateRequested} from "../todo/todo.actions";
 import {TodoHelperService} from "../services/todo-helper.service";
+import * as $ from 'bootstrap';
 
 @Component({
   selector: 'app-navbar',
@@ -24,7 +25,11 @@ export class NavbarComponent implements OnInit {
     console.log("Create new pressed!",this.newTodoForm.value);
     let title : string = this.newTodoForm.value.todoTitle;
     let description : string = this.newTodoForm.value.todoDescription;
+    this.newTodoForm.patchValue({['todoTitle']:""});
+    this.newTodoForm.patchValue({['todoDescription']:""});
     this.store.dispatch(new TodoCreateRequested({todo : this.todoHelperService.generateTodoFromTitleAndDescription(title,description)}));
+    console.log(this.newTodoForm);
+    $('#newTodoModal').modal({show:false})
   }
 
   private initForm() {
