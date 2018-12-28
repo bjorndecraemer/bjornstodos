@@ -27,7 +27,11 @@ export class TodoEffects{
       switchMap(action => {
         console.log("Todo : ",action.payload.todo);
         return this.todosService.createNewTodo(action.payload.todo)}),
-      map((todo: Todo) => new TodoCreatedDone({todo :todo}))
+      switchMap((todo : Todo) => this.todosService.enhanceTodoWithGiphy(todo)),
+      map((todo: Todo) => {
+        console.log("Saved Todo : ",todo);
+        return new TodoCreatedDone({todo :todo});
+      })
     );
 
  constructor(private action$ : Actions, private todosService : TodoService, private giphyService : GiphyService, private store : Store<AppState>){}
