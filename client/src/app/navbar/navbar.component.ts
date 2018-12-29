@@ -2,7 +2,7 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AppState} from "../app.state";
 import {select, Store} from "@ngrx/store";
-import {TodoCreateRequested} from "../todo/todo.actions";
+import {TodoCreateRequested, TodoUpdateTitleAndDescriptionRequested} from "../todo/todo.actions";
 import {TodoHelperService} from "../services/todo-helper.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {Observable, Subscription} from "rxjs";
@@ -27,6 +27,7 @@ export class NavbarComponent implements OnInit {
   @ViewChild("content") _templateModal: ElementRef;
 
   public readonly CREATE_TODO_CLICK_NAME = "CREATE_TODO_BUTTON";
+  public readonly MODIFY_TODO_CLICK_NAME = "MODIFY_TODO_BUTTON";
   public readonly CANCEL_CLICK_NAME = "CANCEL_CLICK_BUTTON";
   public readonly CROSS_CLICK_NAME = "CROSS_CLICK_BUTTON";
 
@@ -36,6 +37,7 @@ export class NavbarComponent implements OnInit {
   todoCreateModalIsOpenSubscription : Subscription;
   todoModalIsModify$ : Observable<Boolean>;
   modifyModalTodoSubscription : Subscription;
+  handledTodo : Todo;
 
   ngOnInit() {
     this.initForm();
@@ -46,6 +48,7 @@ export class NavbarComponent implements OnInit {
       filter((todo : Todo) => todo!= null),
       map((todo : Todo) => {
         this.setFormFields(todo);
+        this.handledTodo = todo;
       })).subscribe();
     this.todoCreateModalIsOpenSubscription = this.store.pipe(select(selectTodoCreateModalOpen),filter(value => value)).pipe(map( value => {
         console.log("CALLED");
@@ -65,6 +68,12 @@ export class NavbarComponent implements OnInit {
     let description : string = this.newTodoForm.value.todoDescription;
     this.store.dispatch(new TodoCreateRequested({todo : this.todoHelperService.generateTodoFromTitleAndDescription(title,description)}));
   }
+  public onModifyTodo(){
+    console.log("Create new pressed!",this.newTodoForm.value);
+    let title : string = this.newTodoForm.value.todoTitle;
+    let description : string = this.newTodoForm.value.todoDescription;
+    this.store.dispatch(new TodoUpdateTitleAndDescriptionRequested({todo : this.handledTodo, newTitle : title, newDescription : description}));
+  }
 
   private initForm() {
     let todoTitle = '';
@@ -83,6 +92,9 @@ export class NavbarComponent implements OnInit {
     return this.modalService.open(this._templateModal, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       if(result && result === this.CREATE_TODO_CLICK_NAME){
         this.onCreateNewTodo();
+      }
+      if(result && result === this.MODIFY_TODO_CLICK_NAME){
+        this.onModifyTodo();
       }
       this.resetFormFields();
       this.store.dispatch(new CloseCreateTodoModal());

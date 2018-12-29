@@ -10,12 +10,16 @@ import {
   TodoCreatedDone,
   TodoCreateRequested,
   TodoDeleteDone,
-  TodoDeleteRequested
+  TodoDeleteRequested,
+  TodoUpdateDone,
+  TodoUpdateStatusRequested,
+  TodoUpdateTitleAndDescriptionRequested
 } from "./todo.actions";
 import {filter, map, mergeMap, switchMap, withLatestFrom} from "rxjs/operators";
 import {allTodosLoaded} from "./todo.selectors";
 import {GiphyService} from "../services/giphy.service";
 import {Todo} from "./model/todo";
+import {Update} from "@ngrx/entity";
 
 @Injectable()
 export class TodoEffects{
@@ -54,6 +58,33 @@ export class TodoEffects{
         return new TodoDeleteDone({id:id});
       })
     )
+  @Effect()
+  updateTodoStatus$ = this.action$
+    .pipe(
+      ofType<TodoUpdateStatusRequested>(TodoActionTypes.TodoUpdateStatusRequested),
+      switchMap( action => {
+        console.log("Todo Update Todo Status: ",action.payload.todo, " -> New status = ",action.payload.newStatus);
+        return this.todosService.updateTodoStatus(action.payload.todo,action.payload.newStatus,action.payload.completedDate)
+      }),
+      map((todo : Todo) => {
+        let todoUpdate : Update<Todo> = {id : todo.id, changes : todo}
+        return new TodoUpdateDone({todoUpdate});
+      })
+    );
+  @Effect()
+  updateTodoTitleAndDescription$ = this.action$
+    .pipe(
+      ofType<TodoUpdateTitleAndDescriptionRequested>(TodoActionTypes.TodoUpdateTitleAndDescriptionRequested),
+      switchMap( action => {
+        console.log("Todo Update Todo Title and Description: ",action.payload.todo, " -> New Title and desc = ",action.payload.newTitle, " - ",action.payload.newDescription);
+        return this.todosService.updateTodoTitleAndDescription(action.payload.todo,action.payload.newTitle,action.payload.newDescription)
+      }),
+      switchMap((todo : Todo) => this.todosService.enhanceTodoWithGiphy(todo)),
+      map((todo : Todo) => {
+        let todoUpdate : Update<Todo> = {id : todo.id, changes : todo}
+        return new TodoUpdateDone({todoUpdate});
+      })
+    );
 
  constructor(private action$ : Actions, private todosService : TodoService, private giphyService : GiphyService, private store : Store<AppState>){}
 

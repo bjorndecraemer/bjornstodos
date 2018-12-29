@@ -39,4 +39,23 @@ export class TodoService {
   public deleteTodoById(id : number) : Observable<Object>{
     return this.http.delete('http://localhost:8080/api/v1/todos/delete/'+id);
   }
+
+  public updateTodoStatus(todo : Todo, newStatus : Boolean, newCompletedDate : Date) : Observable<Object>{
+    todo.completed = newStatus.valueOf();
+    if(todo.completed){
+      todo.completedDate = newCompletedDate;
+    }
+    else{
+      todo.completedDate = null;
+    }
+    return this.http.put('http://localhost:8080/api/v1/todos/',todo);
+  }
+
+  public updateTodoTitleAndDescription(todo : Todo, newTitle : string, newDescription : string) : Observable<Object>{
+    todo.title = newTitle;
+    todo.description = newDescription;
+    return this.http.put('http://localhost:8080/api/v1/todos/',todo);
+  }
+
+
 }

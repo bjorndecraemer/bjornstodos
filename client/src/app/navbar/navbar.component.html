@@ -46,6 +46,6 @@
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="modal.dismiss(CANCEL_CLICK_NAME)">Cancel</button>
     <button *ngIf="!(todoModalIsModify$ | async)" type="button" [disabled]="!newTodoForm.valid" class="btn btn-danger" (click)="modal.close(CREATE_TODO_CLICK_NAME)">Create Todo</button>
-    <button *ngIf="todoModalIsModify$ | async" type="button" [disabled]="!newTodoForm.valid || newTodoForm.pristine" class="btn btn-danger" (click)="modal.close(CREATE_TODO_CLICK_NAME)">Modify Todo</button>
+    <button *ngIf="todoModalIsModify$ | async" type="button" [disabled]="!newTodoForm.valid || newTodoForm.pristine" class="btn btn-danger" (click)="modal.close(MODIFY_TODO_CLICK_NAME)">Modify Todo</button>
   </div>
 </ng-template>

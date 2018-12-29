@@ -3,7 +3,7 @@ import {Observable} from "rxjs";
 import {Todo} from "../model/todo";
 import {select, Store} from "@ngrx/store";
 import {AppState} from "../../app.state";
-import {AllTodosRequested, TodoDeleteRequested} from "../todo.actions";
+import {AllTodosRequested, TodoDeleteRequested, TodoUpdateStatusRequested} from "../todo.actions";
 import {selectAllCompletedTodos, selectAllOpenTodos, selectAllTodos} from "../todo.selectors";
 import {ActivateTodoControls, OpenModifyTodoModal} from "../../common/state/layout/layout.actions";
 
@@ -38,9 +38,11 @@ export class TodoListComponent implements OnInit {
   }
   completeTodoPressed(todo : Todo){
     console.log("completeTodoPressed called for todo : ",todo);
+    this.store.dispatch(new TodoUpdateStatusRequested({todo : todo, newStatus : true, completedDate : new Date()}));
   }
   reopenTodoPressed(todo : Todo){
     console.log("reopenTodoPressed called for todo : ",todo);
+    this.store.dispatch(new TodoUpdateStatusRequested({todo : todo, newStatus : false, completedDate : null}));
   }
   modifyTodoPressed(todo : Todo){
     console.log("ModifyTodoPressed called for todo : ",todo);

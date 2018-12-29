@@ -37,6 +37,14 @@ export function todosReducer(state = initialTodosState, action: TodoActions) : T
       return adapter.removeOne(action.payload.id,{...state, loading : false});
     case TodoActionTypes.TodoDeleteRequestFail :
       return {...state, loading : false};
+    case TodoActionTypes.TodoUpdateStatusRequested :
+      return {...state, loading : true}
+    case TodoActionTypes.TodoUpdateTitleAndDescriptionRequested :
+      return {...state, loading : true}
+    case TodoActionTypes.TodoUpdateDone :
+      return adapter.updateOne(action.payload.todoUpdate, {...state, loading : false})
+    case TodoActionTypes.TodoUpdateFail :
+      return {...state, loading : false};
     default : {
       return state;
     }

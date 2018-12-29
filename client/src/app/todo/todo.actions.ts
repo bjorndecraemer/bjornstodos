@@ -1,5 +1,6 @@
 import {Action} from "@ngrx/store";
 import {Todo} from "./model/todo";
+import {Update} from "@ngrx/entity";
 
 export enum TodoActionTypes{
   AllTodosRequested = '[Todo List Page] All Todos Requested',
@@ -67,7 +68,7 @@ export class TodoUpdateTitleAndDescriptionRequested implements Action{
 }
 export class TodoUpdateDone implements Action{
   readonly type = TodoActionTypes.TodoUpdateDone;
-  constructor(public payload : {todo: Todo}){}
+  constructor(public payload : {todoUpdate: Update<Todo>}){}
 }
 export class TodoUpdateFail implements Action{
   readonly type = TodoActionTypes.TodoUpdateFail;
