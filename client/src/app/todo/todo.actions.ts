@@ -11,6 +11,10 @@ export enum TodoActionTypes{
   TodoDeleteRequested = '[Todo List Page] Todo Delete Requested',
   TodoDeleteDone = '[Todos API] Todo Delete Done',
   TodoDeleteRequestFail = '[Todos API] Todo Delete Request Fail',
+  TodoUpdateStatusRequested = '[Todo List Page] Todo Update Status Requested',
+  TodoUpdateTitleAndDescriptionRequested = '[Todo List Page] Todo Update Title and Description Requested',
+  TodoUpdateDone = '[Todo API] Todo Update Done',
+  TodoUpdateFail = '[Todo API] Todo Update Fail'
 }
 
 
@@ -53,6 +57,22 @@ export class TodoDeleteRequestFail implements Action{
   readonly type = TodoActionTypes.TodoDeleteRequestFail;
 }
 
+export class TodoUpdateStatusRequested implements Action{
+  readonly type = TodoActionTypes.TodoUpdateStatusRequested;
+  constructor(public payload : {todo:Todo, newStatus : Boolean, completedDate : Date}){}
+}
+export class TodoUpdateTitleAndDescriptionRequested implements Action{
+  readonly type = TodoActionTypes.TodoUpdateTitleAndDescriptionRequested;
+  constructor(public payload : {todo:Todo, newTitle : string, newDescription : string}){}
+}
+export class TodoUpdateDone implements Action{
+  readonly type = TodoActionTypes.TodoUpdateDone;
+  constructor(public payload : {todo: Todo}){}
+}
+export class TodoUpdateFail implements Action{
+  readonly type = TodoActionTypes.TodoUpdateFail;
+}
+
 export type TodoActions =
   AllTodosRequested
   | AllTodosLoaded
@@ -63,4 +83,8 @@ export type TodoActions =
   | TodoDeleteRequested
   | TodoDeleteDone
   | TodoDeleteRequestFail
+  | TodoUpdateStatusRequested
+  | TodoUpdateTitleAndDescriptionRequested
+  | TodoUpdateDone
+  | TodoUpdateFail
 
