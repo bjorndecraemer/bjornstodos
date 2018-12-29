@@ -4,7 +4,7 @@ import {Todo} from "../model/todo";
 import {select, Store} from "@ngrx/store";
 import {AppState} from "../../app.state";
 import {AllTodosRequested, TodoDeleteRequested, TodoUpdateStatusRequested} from "../todo.actions";
-import {selectAllCompletedTodos, selectAllOpenTodos, selectAllTodos} from "../todo.selectors";
+import {isLoading, selectAllCompletedTodos, selectAllOpenTodos, selectAllTodos} from "../todo.selectors";
 import {ActivateTodoControls, OpenModifyTodoModal} from "../../common/state/layout/layout.actions";
 
 @Component({
@@ -17,6 +17,7 @@ export class TodoListComponent implements OnInit {
   todos$ : Observable<Todo[]>;
   openTodos$ : Observable<Todo[]>;
   completedTodos$ : Observable<Todo[]>;
+  loadingIsVisible$ : Observable<Boolean>;
 
   constructor(private store: Store<AppState>) { }
 
@@ -31,6 +32,10 @@ export class TodoListComponent implements OnInit {
     this.completedTodos$ = this.store
       .pipe(
         select(selectAllCompletedTodos)
+      )
+    this.loadingIsVisible$  = this.store
+      .pipe(
+        select(isLoading)
       )
   }
   deleteTodoPressed(id : number){

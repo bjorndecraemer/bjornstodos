@@ -5,14 +5,16 @@ export interface LayoutState{
   todoControlsActive : boolean,
   createTodoModalIsOpen : boolean,
   modalIsEditMode : boolean,
-  layoutLoadedTodo : Todo
+  layoutLoadedTodo : Todo,
+  layoutIsLoading : boolean
 };
 
 const initialState : LayoutState = {
   todoControlsActive : false,
   createTodoModalIsOpen : false,
   modalIsEditMode : false,
-  layoutLoadedTodo : null
+  layoutLoadedTodo : null,
+  layoutIsLoading : false
 };
 
 export function layoutReducer(state = initialState, action: LayoutActions) : LayoutState{

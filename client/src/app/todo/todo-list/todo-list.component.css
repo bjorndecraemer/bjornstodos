@@ -52,3 +52,10 @@
   border-radius: 1rem;
   padding: 10px;
 }
+.todo-loader{
+  z-index: 101;
+  position: fixed;
+  top : 33%;
+  right : 50%;
+  color : #dc3545;
+}
