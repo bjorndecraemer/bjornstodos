@@ -2,13 +2,19 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AppState} from "../app.state";
 import {select, Store} from "@ngrx/store";
-import {AllTodosRequested, TodoCreateRequested} from "../todo/todo.actions";
+import {TodoCreateRequested} from "../todo/todo.actions";
 import {TodoHelperService} from "../services/todo-helper.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {Subscription} from "rxjs";
-import {selectTodoControlsAreActive, selectTodoCreateModalOpen} from "../common/state/layout/layout.selectors";
+import {Observable, Subscription} from "rxjs";
+import {
+  selectTodoControlsAreActive,
+  selectTodoCreateModalOpen,
+  selectTodoModalIsModify,
+  selectTodoModalModifyTodo
+} from "../common/state/layout/layout.selectors";
 import {filter, map} from "rxjs/operators";
 import {CloseCreateTodoModal, OpenCreateTodoModal} from "../common/state/layout/layout.actions";
+import {Todo} from "../todo/model/todo";
 
 @Component({
   selector: 'app-navbar',
@@ -28,12 +34,19 @@ export class NavbarComponent implements OnInit {
   isNavbarCollapsed=true;
   todoControlsAreActive$;
   todoCreateModalIsOpenSubscription : Subscription;
-
+  todoModalIsModify$ : Observable<Boolean>;
+  modifyModalTodoSubscription : Subscription;
 
   ngOnInit() {
     this.initForm();
-    this.store.dispatch(new AllTodosRequested());
     this.todoControlsAreActive$ = this.store.pipe(select(selectTodoControlsAreActive));
+    this.todoModalIsModify$ = this.store.pipe(select(selectTodoModalIsModify));
+    this.modifyModalTodoSubscription = this.store.pipe(
+      select(selectTodoModalModifyTodo),
+      filter((todo : Todo) => todo!= null),
+      map((todo : Todo) => {
+        this.setFormFields(todo);
+      })).subscribe();
     this.todoCreateModalIsOpenSubscription = this.store.pipe(select(selectTodoCreateModalOpen),filter(value => value)).pipe(map( value => {
         console.log("CALLED");
         if(value){
@@ -57,8 +70,8 @@ export class NavbarComponent implements OnInit {
     let todoTitle = '';
     let todoDescription = '';
     this.newTodoForm = new FormGroup({
-      'todoTitle': new FormControl(todoTitle, Validators.required),
-      'todoDescription': new FormControl(todoDescription, Validators.required),
+      'todoTitle': new FormControl(todoTitle, [Validators.required, Validators.maxLength(40)]),
+      'todoDescription': new FormControl(todoDescription, [Validators.required, Validators.maxLength(250)]),
     });
   }
 
@@ -83,9 +96,14 @@ export class NavbarComponent implements OnInit {
     this.newTodoForm.patchValue({['todoTitle']:""});
     this.newTodoForm.patchValue({['todoDescription']:""});
   }
+  private setFormFields(todo : Todo){
+    this.newTodoForm.patchValue({['todoTitle']:todo.title});
+    this.newTodoForm.patchValue({['todoDescription']:todo.description});
+  }
 
   ngOnDestroy(){
     console.log("ONDESTROY")
     this.todoCreateModalIsOpenSubscription.unsubscribe();
+    this.modifyModalTodoSubscription.unsubscribe();
   }
 }

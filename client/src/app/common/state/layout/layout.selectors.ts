@@ -13,3 +13,12 @@ export const selectTodoCreateModalOpen = createSelector(
   (layoutState : LayoutState) => layoutState.createTodoModalIsOpen
 );
 
+export const selectTodoModalIsModify = createSelector(
+  selectLayoutState,
+  (layoutState : LayoutState) => layoutState.modalIsEditMode
+);
+export const selectTodoModalModifyTodo = createSelector(
+  selectLayoutState,
+  (layoutState : LayoutState) => layoutState.layoutLoadedTodo
+);
+

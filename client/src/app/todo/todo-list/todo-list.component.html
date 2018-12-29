@@ -11,6 +11,7 @@
             <fa-icon class="fa-lg todo-icon todo-status-icon todo-status-icon-modify text-info"
                      (click)="modifyTodoPressed(todo)"
                      aria-hidden="true"
+                     *ngIf="!todo.completed"
                      [icon]="['fas','wrench']">
             </fa-icon>
             <fa-icon class="fa-lg todo-icon todo-status-icon todo-status-icon-danger"

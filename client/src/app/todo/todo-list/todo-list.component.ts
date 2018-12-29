@@ -5,7 +5,7 @@ import {select, Store} from "@ngrx/store";
 import {AppState} from "../../app.state";
 import {AllTodosRequested, TodoDeleteRequested} from "../todo.actions";
 import {selectAllCompletedTodos, selectAllOpenTodos, selectAllTodos} from "../todo.selectors";
-import {ActivateTodoControls, OpenCreateTodoModal} from "../../common/state/layout/layout.actions";
+import {ActivateTodoControls, OpenModifyTodoModal} from "../../common/state/layout/layout.actions";
 
 @Component({
   selector: 'app-todo-list',
@@ -44,7 +44,7 @@ export class TodoListComponent implements OnInit {
   }
   modifyTodoPressed(todo : Todo){
     console.log("ModifyTodoPressed called for todo : ",todo);
-    this.store.dispatch(new OpenCreateTodoModal());
+    this.store.dispatch(new OpenModifyTodoModal({todo:todo}));
   }
 
 }
