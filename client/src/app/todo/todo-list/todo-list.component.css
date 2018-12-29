@@ -59,3 +59,10 @@
   right : 50%;
   color : #dc3545;
 }
+.todo-alert-messages{
+  z-index: 102;
+  position: fixed;
+  right : 10px;
+  background: #dc3545;
+  color: white;
+}

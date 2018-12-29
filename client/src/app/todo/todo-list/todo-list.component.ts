@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {Todo} from "../model/todo";
 import {select, Store} from "@ngrx/store";
 import {AppState} from "../../app.state";
 import {AllTodosRequested, TodoDeleteRequested, TodoUpdateStatusRequested} from "../todo.actions";
 import {isLoading, selectAllCompletedTodos, selectAllOpenTodos, selectAllTodos} from "../todo.selectors";
 import {ActivateTodoControls, OpenModifyTodoModal} from "../../common/state/layout/layout.actions";
+import {debounceTime} from "rxjs/operators";
 
 @Component({
   selector: 'app-todo-list',
@@ -18,6 +19,10 @@ export class TodoListComponent implements OnInit {
   openTodos$ : Observable<Todo[]>;
   completedTodos$ : Observable<Todo[]>;
   loadingIsVisible$ : Observable<Boolean>;
+  private _success = new Subject<string>();
+
+  staticAlertClosed = false;
+  successMessage: string;
 
   constructor(private store: Store<AppState>) { }
 
@@ -37,6 +42,13 @@ export class TodoListComponent implements OnInit {
       .pipe(
         select(isLoading)
       )
+    setTimeout(() => this.staticAlertClosed = true, 20000);
+
+    this._success.subscribe((message) => this.successMessage = message);
+    this._success.pipe(
+      debounceTime(3000)
+    ).subscribe(() => this.successMessage = null);
+    this.showMessage();
   }
   deleteTodoPressed(id : number){
     this.store.dispatch(new TodoDeleteRequested({id:id}));
@@ -52,6 +64,9 @@ export class TodoListComponent implements OnInit {
   modifyTodoPressed(todo : Todo){
     console.log("ModifyTodoPressed called for todo : ",todo);
     this.store.dispatch(new OpenModifyTodoModal({todo:todo}));
+  }
+  public showMessage() {
+    this._success.next('This is a longer message!');
   }
 
 }
