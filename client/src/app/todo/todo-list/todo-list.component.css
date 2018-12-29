@@ -1,0 +1,54 @@
+.todo-card-header{
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+.todo-status-icon:hover{
+  font-size: 1.43333em;
+}
+.todo-icon{
+  float: right;
+  margin-left: 4px;
+}
+.todo-icon-left{
+  float: left;
+  margin-right: 4px;
+}
+.todo-status-icon-danger{
+  color: #dc3545;
+}
+.todo-status-icon-completed{
+  color: #28a745;
+}
+.todo-status-icon-danger:hover{
+  color: #28a745;
+}
+.todo-status-icon-completed:hover{
+  color: #dc3545;
+}
+.todo-trash-icon{
+  color: #dc3545;
+}
+.todo-trash-icon:hover{
+  color: #ff6373;
+}
+.todo-status-icon-modify{
+  color: #17a2b8;
+}
+.todo-status-icon-modify:hover{
+  color: #0f6674
+}
+.todo-status-icon-completed-on{
+  color: #28a745;
+}
+.todo-card-title{
+  font-weight: bold;
+  text-align: center;
+}
+.todo-card-description{
+  font-style: italic;
+}
+.card{
+  border-radius: 1rem;
+  padding: 10px;
+}

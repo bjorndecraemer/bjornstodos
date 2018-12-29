@@ -1,11 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AppState} from "../app.state";
-import {Store} from "@ngrx/store";
+import {select, Store} from "@ngrx/store";
 import {AllTodosRequested, TodoCreateRequested} from "../todo/todo.actions";
 import {TodoHelperService} from "../services/todo-helper.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {selectTodoControlsActive} from "../todo/todo.selectors";
+import {Subscription} from "rxjs";
+import {selectTodoControlsAreActive, selectTodoCreateModalOpen} from "../common/state/layout/layout.selectors";
+import {filter, map} from "rxjs/operators";
+import {CloseCreateTodoModal, OpenCreateTodoModal} from "../common/state/layout/layout.actions";
 
 @Component({
   selector: 'app-navbar',
@@ -14,17 +17,30 @@ import {selectTodoControlsActive} from "../todo/todo.selectors";
 })
 export class NavbarComponent implements OnInit {
 
+
+  @ViewChild("content") _templateModal: ElementRef;
+
   public readonly CREATE_TODO_CLICK_NAME = "CREATE_TODO_BUTTON";
   public readonly CANCEL_CLICK_NAME = "CANCEL_CLICK_BUTTON";
   public readonly CROSS_CLICK_NAME = "CROSS_CLICK_BUTTON";
 
   newTodoForm : FormGroup;
   isNavbarCollapsed=true;
+  todoControlsAreActive$;
+  todoCreateModalIsOpenSubscription : Subscription;
 
 
   ngOnInit() {
     this.initForm();
     this.store.dispatch(new AllTodosRequested());
+    this.todoControlsAreActive$ = this.store.pipe(select(selectTodoControlsAreActive));
+    this.todoCreateModalIsOpenSubscription = this.store.pipe(select(selectTodoCreateModalOpen),filter(value => value)).pipe(map( value => {
+        console.log("CALLED");
+        if(value){
+          return this.open();
+        }
+      } )
+    ).subscribe();
   }
 
   constructor(private store : Store<AppState>, private todoHelperService : TodoHelperService, private modalService : NgbModal) { }
@@ -46,14 +62,20 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+  openCreateTodoModal(){
+    this.store.dispatch(new OpenCreateTodoModal());
+  }
+
+  open() {
+    return this.modalService.open(this._templateModal, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       if(result && result === this.CREATE_TODO_CLICK_NAME){
         this.onCreateNewTodo();
       }
       this.resetFormFields();
-    }, (reason) => {
+      this.store.dispatch(new CloseCreateTodoModal());
+    }, () => {
       this.resetFormFields();
+      this.store.dispatch(new CloseCreateTodoModal());
     });
   }
 
@@ -62,13 +84,8 @@ export class NavbarComponent implements OnInit {
     this.newTodoForm.patchValue({['todoDescription']:""});
   }
 
-  // private getDismissReason(reason: any): string {
-  //   if (reason === ModalDismissReasons.ESC) {
-  //     return 'by pressing ESC';
-  //   } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-  //     return 'by clicking on a backdrop';
-  //   } else {
-  //     return  `with: ${reason}`;
-  //   }
-  // }
+  ngOnDestroy(){
+    console.log("ONDESTROY")
+    this.todoCreateModalIsOpenSubscription.unsubscribe();
+  }
 }

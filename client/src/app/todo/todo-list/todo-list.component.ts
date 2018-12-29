@@ -5,6 +5,7 @@ import {select, Store} from "@ngrx/store";
 import {AppState} from "../../app.state";
 import {AllTodosRequested, TodoDeleteRequested} from "../todo.actions";
 import {selectAllCompletedTodos, selectAllOpenTodos, selectAllTodos} from "../todo.selectors";
+import {ActivateTodoControls, OpenCreateTodoModal} from "../../common/state/layout/layout.actions";
 
 @Component({
   selector: 'app-todo-list',
@@ -20,6 +21,7 @@ export class TodoListComponent implements OnInit {
   constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
+    this.store.dispatch(new ActivateTodoControls());
     this.store.dispatch(new AllTodosRequested());
     this.todos$ = this.store.pipe(select(selectAllTodos));
     this.openTodos$ = this.store
@@ -31,9 +33,18 @@ export class TodoListComponent implements OnInit {
         select(selectAllCompletedTodos)
       )
   }
-
   deleteTodoPressed(id : number){
     this.store.dispatch(new TodoDeleteRequested({id:id}));
+  }
+  completeTodoPressed(todo : Todo){
+    console.log("completeTodoPressed called for todo : ",todo);
+  }
+  reopenTodoPressed(todo : Todo){
+    console.log("reopenTodoPressed called for todo : ",todo);
+  }
+  modifyTodoPressed(todo : Todo){
+    console.log("ModifyTodoPressed called for todo : ",todo);
+    this.store.dispatch(new OpenCreateTodoModal());
   }
 
 }

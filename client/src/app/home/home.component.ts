@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
+import {AppState} from "../app.state";
+import {DeActivateTodoControls} from "../common/state/layout/layout.actions";
+import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'app-home',
@@ -8,9 +11,10 @@ import {Router} from "@angular/router";
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private router : Router) { }
+  constructor(private router : Router, private store : Store<AppState>) { }
 
   ngOnInit() {
+    this.store.dispatch(new DeActivateTodoControls());
   }
 
   todoListClicked(){

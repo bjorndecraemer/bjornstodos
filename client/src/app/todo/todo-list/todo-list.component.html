@@ -1,28 +1,56 @@
 <div class="container-fluid">
-      <div class="row">
-      <div class="card todoCard col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let todo of todos$ | async">
-        <div class="card-header row">
-          <div class=" col-11">
-            <div class="card-text">{{todo.createdDate | date:'d/LL/yyyy H:mm'}}</div>
-          {{todo.title}}
+  <div class="row">
+    <div class="card todoCard col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let todo of todos$ | async">
+      <div class="todo-card-header row">
+          <div class="col-12">
+            <fa-icon class="fa-lg todo-icon todo-status-icon todo-trash-icon"
+                     (click)="deleteTodoPressed(todo.id)"
+                     aria-hidden="true"
+                     [icon]="['far','trash-alt']">
+            </fa-icon>
+            <fa-icon class="fa-lg todo-icon todo-status-icon todo-status-icon-modify text-info"
+                     (click)="modifyTodoPressed(todo)"
+                     aria-hidden="true"
+                     [icon]="['fas','wrench']">
+            </fa-icon>
+            <fa-icon class="fa-lg todo-icon todo-status-icon todo-status-icon-danger"
+                     (click)="completeTodoPressed(todo)"
+                     aria-hidden="true"
+                     *ngIf="!todo.completed"
+                     [icon]="['far','circle']">
+            </fa-icon>
+            <fa-icon class="fa-lg todo-icon todo-status-icon todo-status-icon-completed"
+                     (click)="reopenTodoPressed(todo)"
+                     aria-hidden="true"
+                     *ngIf="todo.completed"
+                     [icon]="['far','check-circle']">
+            </fa-icon>
           </div>
-
-          <div class="col-1 deleteButtonDiv">
-            <button type="button" class="btn btn-danger todoRemove" (click)="deleteTodoPressed(todo.id)">X</button>
-          </div>
-
-        </div>
+      </div>
       <img class="card-img-top" [src]="todo.giphyUrl" alt="Card image cap">
-      <div class="card-body">
-        <div class="card-text">{{todo.description}}</div>
+      <div class="todo-card-header row">
+        <div class="col-12 card-text todo-card-title">
 
-        <div class="card-text" *ngIf="todo.completed">Completed on : {{todo.completedDate | date:'d/LL/yyyy H:mm'}}</div>
-      </div>
-        <div class="card-footer">
-          <a class="btn btn-outline-primary todoEditButton todoButtons">Edit</a>
-          <a *ngIf="!todo.completed" class="btn btn-outline-success todoSuccesButton  todoButtons">Done</a>
+          <span>{{todo.title}}</span>
         </div>
       </div>
+      <div class="card-body row">
+        <div class="col-12">
+          <span class="card-text todo-card-title">{{todo.createdDate | date:'d/LL/yyyy H:mm'}}</span>
+        </div>
+        <div class="col-12 card-text todo-card-description">{{todo.description}}</div>
       </div>
+      <div class="card-footer">
+        <div class="card-text"
+             *ngIf="todo.completed">
+          <fa-icon
+            class="fa-lg todo-icon-left todo-status-icon-completed-on"
+            (click)="reopenTodoPressed(todo)"
+            aria-hidden="true"
+            [icon]="['fas','clipboard-check']">
+          </fa-icon>{{todo.completedDate | date:'d/LL/yyyy H:mm'}}</div>
+      </div>
+    </div>
+  </div>
 </div>
 
