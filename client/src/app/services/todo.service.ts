@@ -41,20 +41,11 @@ export class TodoService {
   }
 
   public updateTodoStatus(todo : Todo, newStatus : Boolean, newCompletedDate : Date) : Observable<Object>{
-    todo.completed = newStatus.valueOf();
-    if(todo.completed){
-      todo.completedDate = newCompletedDate;
-    }
-    else{
-      todo.completedDate = null;
-    }
-    return this.http.put('http://localhost:8080/api/v1/todos/',todo);
+    return this.http.put('http://localhost:8080/api/v1/todos/update',{...todo, completed : newStatus.valueOf(), completedDate : newCompletedDate});
   }
 
   public updateTodoTitleAndDescription(todo : Todo, newTitle : string, newDescription : string) : Observable<Object>{
-    todo.title = newTitle;
-    todo.description = newDescription;
-    return this.http.put('http://localhost:8080/api/v1/todos/',todo);
+    return this.http.put('http://localhost:8080/api/v1/todos/update',{...todo,title : newTitle, description : newDescription});
   }
 
 

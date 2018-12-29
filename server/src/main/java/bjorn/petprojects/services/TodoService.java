@@ -12,4 +12,5 @@ public interface TodoService {
     TodoDTO findById(Long id);
     TodoDTO createNewTodo(TodoDTO todoDTO) throws IOException;
     void deleteById(Long id);
+    TodoDTO updateTodo(TodoDTO todoDTO) throws IOException;
 }

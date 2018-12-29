@@ -70,4 +70,18 @@ public class TodoController {
             return new ResponseEntity<>(id,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PutMapping("update")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<TodoDTO> updateTodo(@RequestBody TodoDTO todo){
+        System.out.println("UpdateTodo called");
+        System.out.println(todo.toString());
+        try {
+            TodoDTO savedTodo = todoService.updateTodo(todo);
+            return new ResponseEntity<>(savedTodo, HttpStatus.OK);
+        }
+        catch (IOException iOE){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
 }
