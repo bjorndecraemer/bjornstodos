@@ -50,7 +50,7 @@ const routes: Routes = [
     StoreRouterConnectingModule.forRoot({stateKey: 'router'})
   ],
   providers: [],
-  exports : [NavbarComponent],
+  exports : [],
   bootstrap: [AppComponent]
 })
 export class AppModule {

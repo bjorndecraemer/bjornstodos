@@ -18,7 +18,7 @@ import {
   todoInfoMessage
 } from "../todo.selectors";
 import {ActivateTodoControls, OpenModifyTodoModal} from "../../common/state/layout/layout.actions";
-import {debounceTime, filter, map, withLatestFrom} from "rxjs/operators";
+import {debounceTime, filter, map} from "rxjs/operators";
 
 @Component({
   selector: 'app-todo-list',
@@ -48,15 +48,15 @@ export class TodoListComponent implements OnInit, OnDestroy {
     this.openTodos$ = this.store
       .pipe(
         select(selectAllOpenTodos)
-      )
+      );
     this.completedTodos$ = this.store
       .pipe(
         select(selectAllCompletedTodos)
-      )
+      );
     this.loadingIsVisible$  = this.store
       .pipe(
         select(isLoading)
-      )
+      );
     setTimeout(() => this.staticAlertClosed = true, 20000);
 
     this._success.subscribe((message) => this.successMessage = message);
@@ -67,7 +67,6 @@ export class TodoListComponent implements OnInit, OnDestroy {
       .pipe(
         select(todoInfoMessage),
         map((newMessage : MessageType) => newMessage.message ),
-        withLatestFrom(),
         filter((newMessage : string) => newMessage && newMessage.length > 0)
       ).subscribe((newMessage : string) => {
         this.showMessage(newMessage);
