@@ -6,6 +6,7 @@ import {select, Store} from "@ngrx/store";
 import {
   AllTodosLoaded,
   AllTodosRequested,
+  AllTodosRequestNeedCheck,
   TodoActionTypes,
   TodoCreatedDone,
   TodoCreateRequested,
@@ -24,11 +25,17 @@ import {Update} from "@ngrx/entity";
 @Injectable()
 export class TodoEffects{
   @Effect()
+  loadAllCoursesNeedCheck$ = this.action$
+    .pipe(
+      ofType<AllTodosRequestNeedCheck>(TodoActionTypes.AllTodosRequestNeedCheck),
+      withLatestFrom(this.store.pipe(select(allTodosLoaded))),
+      filter(([action, allTodosLoaded]) => !allTodosLoaded),
+      map(() => new AllTodosRequested())
+    );
+  @Effect()
   loadAllCourses$ = this.action$
     .pipe(
       ofType<AllTodosRequested>(TodoActionTypes.AllTodosRequested),
-      withLatestFrom(this.store.pipe(select(allTodosLoaded))),
-      filter(([action, allTodosLoaded]) => !allTodosLoaded),
       mergeMap(() => this.todosService.getAllEnhancedTodos()),
       map(todos => new AllTodosLoaded({todos :todos}))
     );

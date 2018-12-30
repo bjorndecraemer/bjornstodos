@@ -7,6 +7,7 @@ export interface LayoutState{
   modalIsEditMode : boolean,
   layoutLoadedTodo : Todo,
   layoutIsLoading : boolean
+  infoMessage : string
 };
 
 const initialState : LayoutState = {
@@ -14,7 +15,8 @@ const initialState : LayoutState = {
   createTodoModalIsOpen : false,
   modalIsEditMode : false,
   layoutLoadedTodo : null,
-  layoutIsLoading : false
+  layoutIsLoading : false,
+  infoMessage : ""
 };
 
 export function layoutReducer(state = initialState, action: LayoutActions) : LayoutState{

@@ -4,11 +4,22 @@ import {TodosState} from "./todos.reducers";
 
 export const selectTodosState = createFeatureSelector<TodosState>('todos');
 
+export interface MessageType  {
+  message : string;
+    time : Date;
+}
 
 export const isLoading = createSelector(
   selectTodosState,
   todosState => todosState.loading
-)
+);
+export const todoInfoMessage = createSelector(
+  selectTodosState,
+  todosState => {
+    let msg : MessageType = {message : todosState.todoInfoMessage, time : todosState.todoInfoMessageTime}
+    return msg;
+    }
+);
 
 export const allTodosLoaded = createSelector(
   selectTodosState,
