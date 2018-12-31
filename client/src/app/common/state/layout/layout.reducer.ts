@@ -1,14 +1,17 @@
 import {LayoutActions, LayoutActionTypes} from "./layout.actions";
 import {Todo} from "../../../todo/model/todo";
+import {MessageType} from "../../../todo/todo.selectors";
 
 export interface LayoutState{
   todoControlsActive : boolean,
   createTodoModalIsOpen : boolean,
   modalIsEditMode : boolean,
   layoutLoadedTodo : Todo,
-  layoutIsLoading : boolean
-  infoMessage : string
+  layoutIsLoading : boolean,
+  infoMessage : MessageType
 };
+
+const initialInfoMessage : MessageType = {message : "", time : null};
 
 const initialState : LayoutState = {
   todoControlsActive : false,
@@ -16,7 +19,7 @@ const initialState : LayoutState = {
   modalIsEditMode : false,
   layoutLoadedTodo : null,
   layoutIsLoading : false,
-  infoMessage : ""
+  infoMessage : initialInfoMessage
 };
 
 export function layoutReducer(state = initialState, action: LayoutActions) : LayoutState{
@@ -31,6 +34,10 @@ export function layoutReducer(state = initialState, action: LayoutActions) : Lay
       return {...state, createTodoModalIsOpen:true , modalIsEditMode:true , layoutLoadedTodo:action.payload.todo};
     case LayoutActionTypes.CLOSE_CREATE_TODO_MODAL :
       return {...state, createTodoModalIsOpen:false};
+    case LayoutActionTypes.SHOW_INFO_MESSAGE :
+      return {...state, infoMessage : action.payload};
+    case LayoutActionTypes.RESET_INFO_MESSAGE :
+      return {...state, infoMessage : initialInfoMessage}
     default : return state;
   }
 }

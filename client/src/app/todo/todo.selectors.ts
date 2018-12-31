@@ -13,13 +13,6 @@ export const isLoading = createSelector(
   selectTodosState,
   todosState => todosState.loading
 );
-export const todoInfoMessage = createSelector(
-  selectTodosState,
-  todosState => {
-    let msg : MessageType = {message : todosState.todoInfoMessage, time : todosState.todoInfoMessageTime}
-    return msg;
-    }
-);
 
 export const allTodosLoaded = createSelector(
   selectTodosState,

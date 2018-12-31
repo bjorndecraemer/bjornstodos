@@ -21,4 +21,8 @@ export const selectTodoModalModifyTodo = createSelector(
   selectLayoutState,
   (layoutState : LayoutState) => layoutState.layoutLoadedTodo
 );
+export const selectInfoMessage = createSelector(
+  selectLayoutState,
+  (layoutState : LayoutState) => layoutState.infoMessage
+)
 

@@ -6,7 +6,7 @@ import {select, Store} from "@ngrx/store";
 import {
   AllTodosLoaded,
   AllTodosRequested,
-  AllTodosRequestNeedCheck,
+  LoadingBusy,
   TodoActionTypes,
   TodoCreatedDone,
   TodoCreateRequested,
@@ -16,28 +16,32 @@ import {
   TodoUpdateStatusRequested,
   TodoUpdateTitleAndDescriptionRequested
 } from "./todo.actions";
-import {filter, map, mergeMap, switchMap, withLatestFrom} from "rxjs/operators";
+import {filter, map, mergeMap, switchMap, tap, withLatestFrom} from "rxjs/operators";
 import {allTodosLoaded} from "./todo.selectors";
 import {GiphyService} from "../services/giphy.service";
 import {Todo} from "./model/todo";
 import {Update} from "@ngrx/entity";
+import {ShowInfoMessage} from "../common/state/layout/layout.actions";
 
 @Injectable()
 export class TodoEffects{
   @Effect()
-  loadAllCoursesNeedCheck$ = this.action$
-    .pipe(
-      ofType<AllTodosRequestNeedCheck>(TodoActionTypes.AllTodosRequestNeedCheck),
-      withLatestFrom(this.store.pipe(select(allTodosLoaded))),
-      filter(([action, allTodosLoaded]) => !allTodosLoaded),
-      map(() => new AllTodosRequested())
-    );
-  @Effect()
   loadAllCourses$ = this.action$
     .pipe(
       ofType<AllTodosRequested>(TodoActionTypes.AllTodosRequested),
+      withLatestFrom(this.store.pipe(select(allTodosLoaded))),
+      filter(([action, allTodosLoaded]) => !allTodosLoaded),
+      tap( res => this.store.dispatch(new LoadingBusy({isLoading : true})) ),
       mergeMap(() => this.todosService.getAllEnhancedTodos()),
       map(todos => new AllTodosLoaded({todos :todos}))
+    );
+  @Effect()
+  loadAllCoursesDone$ = this.action$
+    .pipe(
+      ofType<AllTodosLoaded>(TodoActionTypes.AllTodosLoaded),
+      map( () => {
+        return new ShowInfoMessage({message:  "All todo's loaded!", time : new Date()})
+      })
     );
   @Effect()
   createNewTodo$ = this.action$
@@ -53,6 +57,14 @@ export class TodoEffects{
       })
     );
   @Effect()
+  createTodoDone$ = this.action$
+    .pipe(
+      ofType<TodoCreatedDone>(TodoActionTypes.TodoCreateDone),
+      map( action => {
+        return new ShowInfoMessage({message:  "New todo created!", time : new Date()})
+      })
+    );
+  @Effect()
   deleteTodo$ = this.action$
     .pipe(
       ofType<TodoDeleteRequested>(TodoActionTypes.TodoDeleteRequested),
@@ -63,6 +75,15 @@ export class TodoEffects{
       map( (id : number) => {
         console.log("Todo with id "+id+" is deleted");
         return new TodoDeleteDone({id:id});
+      })
+    )
+  @Effect()
+  deleteTodoDone$ = this.action$
+    .pipe(
+      ofType<TodoDeleteDone>(TodoActionTypes.TodoDeleteDone),
+      map( action => {
+        console.log("Todo with id "+action.payload.id+" is requested to be deleted");
+        return new ShowInfoMessage({message:  "Todo is deleted!", time : new Date()})
       })
     )
   @Effect()
@@ -92,7 +113,14 @@ export class TodoEffects{
         return new TodoUpdateDone({todoUpdate});
       })
     );
-
+  @Effect()
+  updateTodoDone$ = this.action$
+    .pipe(
+      ofType<TodoUpdateDone>(TodoActionTypes.TodoUpdateDone),
+      map( () => {
+        return new ShowInfoMessage({message:  "Todo Updated!", time : new Date()})
+      })
+    );
  constructor(private action$ : Actions, private todosService : TodoService, private giphyService : GiphyService, private store : Store<AppState>){}
 
 }

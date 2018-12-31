@@ -3,10 +3,10 @@ import {Todo} from "./model/todo";
 import {Update} from "@ngrx/entity";
 
 export enum TodoActionTypes{
-  AllTodosRequestNeedCheck = '[Todo List Page] All Todos Request Need Check',
   AllTodosRequested = '[Todo List Page] All Todos Requested',
   AllTodosLoaded = '[Todos API] All Courses Loaded',
   AllTodosRequestFail = '[Todos API] All Todos Request Fail',
+  LoadingBusy = '[Todo View Component] Loading Busy',
   TodoCreateRequested = '[Todo Create Modal] Todo Create Requested',
   TodoCreateDone = '[Todos API] Todo Create Done',
   TodoCreateRequestFail = '[Todos API] Todo Create Request Fail',
@@ -16,20 +16,15 @@ export enum TodoActionTypes{
   TodoUpdateStatusRequested = '[Todo List Page] Todo Update Status Requested',
   TodoUpdateTitleAndDescriptionRequested = '[Todo List Page] Todo Update Title and Description Requested',
   TodoUpdateDone = '[Todo API] Todo Update Done',
-  TodoUpdateFail = '[Todo API] Todo Update Fail',
-  ResetInfoMessageState = '[Todo Reducer] Reset Info Message State'
+  TodoUpdateFail = '[Todo API] Todo Update Fail'
 }
 
-
-export class AllTodosRequestNeedCheck implements Action{
-  readonly type = TodoActionTypes.AllTodosRequestNeedCheck;
+export class LoadingBusy implements Action{
+  readonly type = TodoActionTypes.LoadingBusy;
+  constructor(public payload: {isLoading : boolean}){}
 }
 export class AllTodosRequested implements Action{
   readonly type = TodoActionTypes.AllTodosRequested;
-}
-
-export class ResetInfoMessageState implements Action{
-  readonly type = TodoActionTypes.ResetInfoMessageState;
 }
 
 export class AllTodosLoaded implements Action{
@@ -83,7 +78,6 @@ export class TodoUpdateFail implements Action{
 }
 
 export type TodoActions =
-  AllTodosRequestNeedCheck
   | AllTodosRequested
   | AllTodosLoaded
   | AllTodosRequestFail
@@ -97,5 +91,4 @@ export type TodoActions =
   | TodoUpdateTitleAndDescriptionRequested
   | TodoUpdateDone
   | TodoUpdateFail
-  | ResetInfoMessageState
-
+  | LoadingBusy

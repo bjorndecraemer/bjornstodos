@@ -3,22 +3,11 @@ import {Observable, Subject, Subscription} from "rxjs";
 import {Todo} from "../model/todo";
 import {select, Store} from "@ngrx/store";
 import {AppState} from "../../app.state";
-import {
-  AllTodosRequestNeedCheck,
-  ResetInfoMessageState,
-  TodoDeleteRequested,
-  TodoUpdateStatusRequested
-} from "../todo.actions";
-import {
-  isLoading,
-  MessageType,
-  selectAllCompletedTodos,
-  selectAllOpenTodos,
-  selectAllTodos,
-  todoInfoMessage
-} from "../todo.selectors";
-import {ActivateTodoControls, OpenModifyTodoModal} from "../../common/state/layout/layout.actions";
+import {AllTodosRequested, TodoDeleteRequested, TodoUpdateStatusRequested} from "../todo.actions";
+import {isLoading, MessageType, selectAllCompletedTodos, selectAllOpenTodos, selectAllTodos} from "../todo.selectors";
+import {ActivateTodoControls, OpenModifyTodoModal, ResetInfoMessage} from "../../common/state/layout/layout.actions";
 import {debounceTime, filter, map} from "rxjs/operators";
+import {selectInfoMessage} from "../../common/state/layout/layout.selectors";
 
 @Component({
   selector: 'app-todo-list',
@@ -40,9 +29,8 @@ export class TodoListComponent implements OnInit, OnDestroy {
   constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
-    this.store.dispatch(new ResetInfoMessageState());
     this.store.dispatch(new ActivateTodoControls());
-    this.store.dispatch(new AllTodosRequestNeedCheck());
+    this.store.dispatch(new AllTodosRequested());
 
     this.todos$ = this.store.pipe(select(selectAllTodos));
     this.openTodos$ = this.store
@@ -63,9 +51,11 @@ export class TodoListComponent implements OnInit, OnDestroy {
     this._success.pipe(
       debounceTime(3000)
     ).subscribe(() => this.successMessage = null);
+
+
     this.todoInfoMessageSubscription = this.store
       .pipe(
-        select(todoInfoMessage),
+        select(selectInfoMessage),
         map((newMessage : MessageType) => newMessage.message ),
         filter((newMessage : string) => newMessage && newMessage.length > 0)
       ).subscribe((newMessage : string) => {
@@ -90,6 +80,7 @@ export class TodoListComponent implements OnInit, OnDestroy {
   }
   public showMessage(newMessage : string) {
     this._success.next(newMessage);
+    this.store.dispatch(new ResetInfoMessage());
   }
 
   ngOnDestroy(): void {
