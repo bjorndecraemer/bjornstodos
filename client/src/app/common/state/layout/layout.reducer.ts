@@ -37,7 +37,9 @@ export function layoutReducer(state = initialState, action: LayoutActions) : Lay
     case LayoutActionTypes.SHOW_INFO_MESSAGE :
       return {...state, infoMessage : action.payload};
     case LayoutActionTypes.RESET_INFO_MESSAGE :
-      return {...state, infoMessage : initialInfoMessage}
+      return {...state, infoMessage : initialInfoMessage};
+    case LayoutActionTypes.LOADING_STATUS :
+      return {...state, layoutIsLoading : action.payload.newLoadingStatus}
     default : return state;
   }
 }

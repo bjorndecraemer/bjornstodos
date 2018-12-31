@@ -9,7 +9,8 @@ export enum LayoutActionTypes {
   OPEN_MODIFY_TODO_MODAL = "Layout Open Modify Todo modal",
   CLOSE_CREATE_TODO_MODAL = "[Layout] Close Create Todo modal",
   SHOW_INFO_MESSAGE = '[Inner Code] Show Info Message',
-  RESET_INFO_MESSAGE = '[Inner Code] Reset Info Message'
+  RESET_INFO_MESSAGE = '[Inner Code] Reset Info Message',
+  LOADING_STATUS = '[Inner Code] Loading Status'
 };
 
 export class ActivateTodoControls implements Action{
@@ -36,6 +37,11 @@ export class ResetInfoMessage implements Action{
   readonly type = LayoutActionTypes.RESET_INFO_MESSAGE;
 }
 
+export class LoadingStatus implements Action{
+  readonly type = LayoutActionTypes.LOADING_STATUS;
+  constructor(public payload : {newLoadingStatus : boolean}){}
+}
+
 
 export type LayoutActions =
   ActivateTodoControls
@@ -45,4 +51,5 @@ export type LayoutActions =
   | OpenModifyTodoModal
   | ShowInfoMessage
   | ResetInfoMessage
+  | LoadingStatus
   ;
