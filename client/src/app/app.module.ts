@@ -17,6 +17,7 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {NavbarComponent} from "./navbar/navbar.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {faCheckCircle, faCircle, faTrashAlt} from "@fortawesome/free-regular-svg-icons";
+import {LoginComponent} from "./auth/LoginComponent";
 
 
 const routes: Routes = [
@@ -25,6 +26,7 @@ const routes: Routes = [
     loadChildren: './todo/todos.module#TodosModule'
   }
   ,
+  { path: 'login', component: LoginComponent },
   {path : "", component : HomeComponent},
   {path: "**",
     redirectTo: '/todos'}
@@ -34,7 +36,8 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     HomeComponent,
-    NavbarComponent
+    NavbarComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

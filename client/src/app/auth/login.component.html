@@ -1,0 +1,13 @@
+<form name="form" [formGroup]="userForm" #f="ngForm" novalidate>
+  <div>
+    <label for="userName">Username</label>
+    <input formControlName="userName" type="text" class="form-control" id="userName">
+  </div>
+  <div>
+    <label for="password">Password</label>
+    <input formControlName="password" type="text" class="form-control" id="password">
+  </div>
+  <div>
+    <button (click)="login()">Login</button>
+  </div>
+</form>

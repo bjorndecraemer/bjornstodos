@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {forkJoin, Observable} from "rxjs";
 import {TodoList} from "../todo/model/TodoList";
 import {Todo} from "../todo/model/todo";
@@ -46,6 +46,23 @@ export class TodoService {
 
   public updateTodoTitleAndDescription(todo : Todo, newTitle : string, newDescription : string) : Observable<Object>{
     return this.http.put('http://localhost:8080/api/v1/todos/update',{...todo,title : newTitle, description : newDescription});
+  }
+
+  public authenticate(credentials, callback) {
+
+    const headers = new HttpHeaders(credentials ? {
+      authorization : 'Basic ' + btoa(credentials.username + ':' + credentials.password)
+    } : {});
+
+    this.http.get('user', {headers: headers}).subscribe(response => {
+      if (response['name']) {
+        console.log("Authenticated!!!")
+      } else {
+        console.log("NOT Authenticated!!!")
+      }
+      return callback && callback();
+    });
+
   }
 
 

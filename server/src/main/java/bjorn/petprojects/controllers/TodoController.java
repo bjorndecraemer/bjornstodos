@@ -5,13 +5,12 @@ import bjorn.petprojects.api.v1.model.TodoListDTO;
 import bjorn.petprojects.services.TodoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
-@Controller
-@RequestMapping("api/v1/todos/")
+@RestController
+@RequestMapping("/api/v1/todos/")
 public class TodoController {
 
     private final TodoService todoService;

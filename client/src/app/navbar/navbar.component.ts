@@ -15,6 +15,7 @@ import {
 import {filter, map} from "rxjs/operators";
 import {CloseCreateTodoModal, OpenCreateTodoModal} from "../common/state/layout/layout.actions";
 import {Todo} from "../todo/model/todo";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-navbar',
@@ -59,7 +60,7 @@ export class NavbarComponent implements OnInit {
     ).subscribe();
   }
 
-  constructor(private store : Store<AppState>, private todoHelperService : TodoHelperService, private modalService : NgbModal) { }
+  constructor(private store : Store<AppState>, private todoHelperService : TodoHelperService, private modalService : NgbModal, private http : HttpClient) { }
 
 
   public onCreateNewTodo(){
@@ -113,8 +114,13 @@ export class NavbarComponent implements OnInit {
     this.newTodoForm.patchValue({['todoDescription']:todo.description});
   }
 
+  logout(){
+    console.log("Logout called");
+    this.http.post('logout', {}).subscribe();
+  }
+
   ngOnDestroy(){
-    console.log("ONDESTROY")
+    console.log("ONDESTROY");
     this.todoCreateModalIsOpenSubscription.unsubscribe();
     this.modifyModalTodoSubscription.unsubscribe();
   }
