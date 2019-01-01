@@ -20,7 +20,7 @@ export function todosReducer(state = initialTodosState, action: TodoActions) : T
     case TodoActionTypes.AllTodosRequested :
       return state;
     case TodoActionTypes.AllTodosLoaded :
-      return adapter.addAll(action.payload.todos, state);
+      return adapter.addAll(action.payload.todos, {...state, allTodosLoaded : true});
     case TodoActionTypes.AllTodosRequestFail :
       return {...state,loading:false, allTodosLoaded:false};
     // Cases for Toodo create
