@@ -4,10 +4,10 @@ import {Todo} from "../model/todo";
 import {select, Store} from "@ngrx/store";
 import {AppState} from "../../app.state";
 import {AllTodosRequested, TodoDeleteRequested, TodoUpdateStatusRequested} from "../todo.actions";
-import {isLoading, MessageType, selectAllCompletedTodos, selectAllOpenTodos, selectAllTodos} from "../todo.selectors";
+import {MessageType, selectAllCompletedTodos, selectAllOpenTodos, selectAllTodos} from "../todo.selectors";
 import {ActivateTodoControls, OpenModifyTodoModal, ResetInfoMessage} from "../../common/state/layout/layout.actions";
 import {debounceTime, filter, map} from "rxjs/operators";
-import {selectInfoMessage} from "../../common/state/layout/layout.selectors";
+import {selectInfoMessage, selectIsLoading} from "../../common/state/layout/layout.selectors";
 
 @Component({
   selector: 'app-todo-list',
@@ -43,7 +43,7 @@ export class TodoListComponent implements OnInit, OnDestroy {
       );
     this.loadingIsVisible$  = this.store
       .pipe(
-        select(isLoading)
+        select(selectIsLoading)
       );
     setTimeout(() => this.staticAlertClosed = true, 20000);
 

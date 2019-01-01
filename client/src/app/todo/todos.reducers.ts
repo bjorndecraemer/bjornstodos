@@ -20,33 +20,19 @@ export function todosReducer(state = initialTodosState, action: TodoActions) : T
     case TodoActionTypes.AllTodosRequested :
       return state;
     case TodoActionTypes.AllTodosLoaded :
-      return adapter.addAll(action.payload.todos, {...state, allTodosLoaded : true, loading : false});
+      return adapter.addAll(action.payload.todos, state);
     case TodoActionTypes.AllTodosRequestFail :
       return {...state,loading:false, allTodosLoaded:false};
     // Cases for Toodo create
-    case TodoActionTypes.TodoCreateRequested :
-      return {...state,loading : true};
     case TodoActionTypes.TodoCreateDone :
-      return adapter.addOne( action.payload.todo,{...state, loading : false});
-    case TodoActionTypes.TodoCreateRequestFail :
-      return {...state,loading : false};
+      return adapter.addOne( action.payload.todo,state);
       // Cases for Toodo delete
-    case TodoActionTypes.TodoDeleteRequested :
-      return {...state, loading : true};
     case TodoActionTypes.TodoDeleteDone :
-      return adapter.removeOne(action.payload.id,{...state, loading : false});
-    case TodoActionTypes.TodoDeleteRequestFail :
-      return {...state, loading : false};
-    case TodoActionTypes.TodoUpdateStatusRequested :
-      return {...state, loading : true};
-    case TodoActionTypes.TodoUpdateTitleAndDescriptionRequested :
-      return {...state, loading : true};
+      return adapter.removeOne(action.payload.id, state);
     case TodoActionTypes.TodoUpdateDone :
-      return adapter.updateOne(action.payload.todoUpdate, {...state, loading : false});
+      return adapter.updateOne(action.payload.todoUpdate, state);
     case TodoActionTypes.TodoUpdateFail :
       return {...state, loading : false};
-    case TodoActionTypes.LoadingBusy :
-      return {...state, loading : action.payload.isLoading};
     default : {
       return state;
     }

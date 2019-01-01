@@ -6,7 +6,6 @@ export enum TodoActionTypes{
   AllTodosRequested = '[Todo List Page] All Todos Requested',
   AllTodosLoaded = '[Todos API] All Courses Loaded',
   AllTodosRequestFail = '[Todos API] All Todos Request Fail',
-  LoadingBusy = '[Todo View Component] Loading Busy',
   TodoCreateRequested = '[Todo Create Modal] Todo Create Requested',
   TodoCreateDone = '[Todos API] Todo Create Done',
   TodoCreateRequestFail = '[Todos API] Todo Create Request Fail',
@@ -19,10 +18,6 @@ export enum TodoActionTypes{
   TodoUpdateFail = '[Todo API] Todo Update Fail'
 }
 
-export class LoadingBusy implements Action{
-  readonly type = TodoActionTypes.LoadingBusy;
-  constructor(public payload: {isLoading : boolean}){}
-}
 export class AllTodosRequested implements Action{
   readonly type = TodoActionTypes.AllTodosRequested;
 }
@@ -91,4 +86,3 @@ export type TodoActions =
   | TodoUpdateTitleAndDescriptionRequested
   | TodoUpdateDone
   | TodoUpdateFail
-  | LoadingBusy
