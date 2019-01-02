@@ -6,9 +6,9 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {StoreModule} from "@ngrx/store";
 import {todosReducer} from "./todos.reducers";
 import {EffectsModule} from "@ngrx/effects";
-import {TodoService} from "../services/todo.service";
+import {TodoService} from "./services/todo.service";
 import {TodoEffects} from "./todo.effects";
-import {GiphyService} from "../services/giphy.service";
+import {GiphyService} from "./services/giphy.service";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 

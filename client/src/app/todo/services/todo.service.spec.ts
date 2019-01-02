@@ -2,19 +2,19 @@ import {TestBed} from '@angular/core/testing';
 
 import {TodoService} from './todo.service';
 import {HttpClientModule} from "@angular/common/http";
-import {AppComponent} from "../app.component";
-import {HomeComponent} from "../home/home.component";
-import {NavbarComponent} from "../navbar/navbar.component";
+import {AppComponent} from "../../app.component";
+import {HomeComponent} from "../../home/home.component";
+import {NavbarComponent} from "../../navbar/navbar.component";
 import {BrowserModule} from "@angular/platform-browser";
 import {RouterModule, Routes} from "@angular/router";
 import {StoreModule} from "@ngrx/store";
-import {metaReducers, reducers} from "../app.state";
-import {environment} from "../../environments/environment";
+import {metaReducers, reducers} from "../../app.state";
+import {environment} from "../../../environments/environment";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {EffectsModule} from "@ngrx/effects";
 import {StoreRouterConnectingModule} from "@ngrx/router-store";
 import {GiphyService} from "./giphy.service";
-import {Todo} from "../todo/model/todo";
+import {Todo} from "../model/todo";
 import {of} from "rxjs";
 
 describe('TodoService', () => {

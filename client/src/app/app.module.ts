@@ -17,7 +17,8 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {NavbarComponent} from "./navbar/navbar.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {faCheckCircle, faCircle, faTrashAlt} from "@fortawesome/free-regular-svg-icons";
-import {LoginComponent} from "./auth/LoginComponent";
+import {LoginComponent} from "./common/auth/LoginComponent";
+import {AuthModule} from "./common/auth/auth.module";
 
 
 const routes: Routes = [
@@ -42,6 +43,7 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
+    AuthModule,
     ReactiveFormsModule,
     FormsModule,
     NgbModule,

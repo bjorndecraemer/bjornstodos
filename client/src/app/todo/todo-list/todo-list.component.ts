@@ -5,9 +5,9 @@ import {select, Store} from "@ngrx/store";
 import {AppState} from "../../app.state";
 import {AllTodosRequested, TodoDeleteRequested, TodoUpdateStatusRequested} from "../todo.actions";
 import {MessageType, selectAllCompletedTodos, selectAllOpenTodos, selectAllTodos} from "../todo.selectors";
-import {ActivateTodoControls, OpenModifyTodoModal, ResetInfoMessage} from "../../common/state/layout/layout.actions";
+import {ActivateTodoControls, OpenModifyTodoModal, ResetInfoMessage} from "../../common/layout/layout.actions";
 import {debounceTime, filter, map} from "rxjs/operators";
-import {selectInfoMessage, selectIsLoading} from "../../common/state/layout/layout.selectors";
+import {selectInfoMessage, selectIsLoading} from "../../common/layout/layout.selectors";
 
 @Component({
   selector: 'app-todo-list',

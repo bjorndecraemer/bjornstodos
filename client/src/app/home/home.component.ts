@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AppState} from "../app.state";
-import {DeActivateTodoControls} from "../common/state/layout/layout.actions";
+import {DeActivateTodoControls} from "../common/layout/layout.actions";
 import {Store} from "@ngrx/store";
 
 @Component({

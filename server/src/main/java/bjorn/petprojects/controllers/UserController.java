@@ -21,17 +21,21 @@ public class UserController {
         this.applicationUserRepository = applicationUserRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
-    @PostMapping("/sign-up")
-    public ResponseEntity<String> signup(@RequestBody ApplicationUser user){
+    @PostMapping("/signup")
+    public ResponseEntity<Void> signup(@RequestBody ApplicationUser user){
+        System.out.println("USER : "+user);
         ApplicationUser existingUser = applicationUserRepository.findByUsername(user.getUsername());
+
         if(existingUser != null) {
-            return new ResponseEntity<>("User : "+user.getUsername()+" already exists!",HttpStatus.INTERNAL_SERVER_ERROR);
+
+            return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
 
         applicationUserRepository.save(user);
-        return new ResponseEntity<>("User : "+user.getUsername()+" created successfully",HttpStatus.OK);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

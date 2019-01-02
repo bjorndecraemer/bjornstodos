@@ -3,7 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AppState} from "../app.state";
 import {select, Store} from "@ngrx/store";
 import {TodoCreateRequested, TodoUpdateTitleAndDescriptionRequested} from "../todo/todo.actions";
-import {TodoHelperService} from "../services/todo-helper.service";
+import {TodoHelperService} from "../todo/services/todo-helper.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {Observable, Subscription} from "rxjs";
 import {
@@ -11,9 +11,9 @@ import {
   selectTodoCreateModalOpen,
   selectTodoModalIsModify,
   selectTodoModalModifyTodo
-} from "../common/state/layout/layout.selectors";
+} from "../common/layout/layout.selectors";
 import {filter, map} from "rxjs/operators";
-import {CloseCreateTodoModal, OpenCreateTodoModal} from "../common/state/layout/layout.actions";
+import {CloseCreateTodoModal, OpenCreateTodoModal} from "../common/layout/layout.actions";
 import {Todo} from "../todo/model/todo";
 import {HttpClient} from "@angular/common/http";
 

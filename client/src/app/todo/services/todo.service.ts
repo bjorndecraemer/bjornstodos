@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {forkJoin, Observable} from "rxjs";
-import {TodoList} from "../todo/model/TodoList";
-import {Todo} from "../todo/model/todo";
+import {TodoList} from "../model/TodoList";
+import {Todo} from "../model/todo";
 import {flatMap, map} from "rxjs/operators";
 import {GiphyService} from "./giphy.service";
 

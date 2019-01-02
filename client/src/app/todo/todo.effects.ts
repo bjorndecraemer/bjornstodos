@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Actions, Effect, ofType} from "@ngrx/effects";
-import {TodoService} from "../services/todo.service";
+import {TodoService} from "./services/todo.service";
 import {AppState} from "../app.state";
 import {select, Store} from "@ngrx/store";
 import {
@@ -17,10 +17,10 @@ import {
 } from "./todo.actions";
 import {filter, map, mergeMap, switchMap, tap, withLatestFrom} from "rxjs/operators";
 import {allTodosLoaded} from "./todo.selectors";
-import {GiphyService} from "../services/giphy.service";
+import {GiphyService} from "./services/giphy.service";
 import {Todo} from "./model/todo";
 import {Update} from "@ngrx/entity";
-import {LoadingStatus, ShowInfoMessage} from "../common/state/layout/layout.actions";
+import {LoadingStatus, ShowInfoMessage} from "../common/layout/layout.actions";
 
 @Injectable()
 export class TodoEffects{

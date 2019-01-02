@@ -1,6 +1,6 @@
 import {LayoutActions, LayoutActionTypes} from "./layout.actions";
-import {Todo} from "../../../todo/model/todo";
-import {MessageType} from "../../../todo/todo.selectors";
+import {Todo} from "../../todo/model/todo";
+import {MessageType} from "../../todo/todo.selectors";
 
 export interface LayoutState{
   todoControlsActive : boolean,

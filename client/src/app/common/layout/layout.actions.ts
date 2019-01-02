@@ -1,6 +1,6 @@
 import {Action} from "@ngrx/store";
-import {Todo} from "../../../todo/model/todo";
-import {MessageType} from "../../../todo/todo.selectors";
+import {Todo} from "../../todo/model/todo";
+import {MessageType} from "../../todo/todo.selectors";
 
 export enum LayoutActionTypes {
   ACTIVATE_TODO_CONTROLS = '[Navbar Component] Activate Todo Controls',
