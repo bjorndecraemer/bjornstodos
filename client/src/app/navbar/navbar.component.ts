@@ -16,6 +16,7 @@ import {filter, map} from "rxjs/operators";
 import {CloseCreateTodoModal, OpenCreateTodoModal} from "../common/layout/layout.actions";
 import {Todo} from "../todo/model/todo";
 import {HttpClient} from "@angular/common/http";
+import {selectIsLoggedIn} from "../common/auth/state/auth.selectors";
 
 @Component({
   selector: 'app-navbar',
@@ -37,6 +38,7 @@ export class NavbarComponent implements OnInit {
   todoControlsAreActive$;
   todoCreateModalIsOpenSubscription : Subscription;
   todoModalIsModify$ : Observable<Boolean>;
+  userIsLoggedIn$ : Observable<Boolean>;
   modifyModalTodoSubscription : Subscription;
   handledTodo : Todo;
 
@@ -44,6 +46,7 @@ export class NavbarComponent implements OnInit {
     this.initForm();
     this.todoControlsAreActive$ = this.store.pipe(select(selectTodoControlsAreActive));
     this.todoModalIsModify$ = this.store.pipe(select(selectTodoModalIsModify));
+    this.userIsLoggedIn$ = this.store.pipe(select(selectIsLoggedIn));
     this.modifyModalTodoSubscription = this.store.pipe(
       select(selectTodoModalModifyTodo),
       filter((todo : Todo) => todo!= null),

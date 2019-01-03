@@ -1,6 +1,7 @@
 import {Action} from "@ngrx/store";
 import {ApplicationUser} from "../model/application-user.model";
 import {JWTBearer} from "../model/jwt-bearer.model";
+import {ApiResponseMessage} from "../../../todo/model/apiresponsetechstatuscode.model";
 
 export enum AuthActionTypes {
   SIGNUP_REQUESTED = '[Signup View] Signup Requested',
@@ -18,11 +19,13 @@ export class SignupRequested implements Action{
   readonly type = AuthActionTypes.SIGNUP_REQUESTED;
   constructor(public payload : {user: ApplicationUser}){};
 }
-  export class SignupDone implements Action{
+export class SignupDone implements Action{
   readonly type = AuthActionTypes.SIGNUP_DONE;
+  constructor(public payload : {apiResponseMessage : ApiResponseMessage}){}
 }
 export class SignupFailed implements Action{
   readonly type = AuthActionTypes.SIGNUP_FAILED;
+  constructor(public payload : {apiResponseMessage : ApiResponseMessage}){}
 }
 export class SigninRequested implements Action{
   readonly type = AuthActionTypes.SIGNIN_REQUESTED;
@@ -48,7 +51,7 @@ export class SignoutFailed implements Action{
 }
 
 export type AuthActions =
-SignoutRequested
+SignupRequested
 | SignupDone
 | SignupFailed
 | SigninRequested

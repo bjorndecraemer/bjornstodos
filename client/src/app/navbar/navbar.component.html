@@ -14,8 +14,14 @@
       <li *ngIf="todoControlsAreActive$ | async" class="newTodoGlyph">
           <fa-icon (click)="openCreateTodoModal()" [icon]="['fas','plus']"></fa-icon>
       </li>
+      <li class="nav-item" *ngIf="!(userIsLoggedIn$ | async)">
+        <a class="nav-link" (click)="signup()">Sign Up</a>
+      </li>
       <li class="nav-item">
-        <a class="nav-link" (click)="logout()">Logout</a>
+        <a class="nav-link" (click)="login()" *ngIf="!(userIsLoggedIn$ | async)">Log in</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="logout()" *ngIf="(userIsLoggedIn$ | async)">Logout</a>
       </li>
     </ul>
     <form *ngIf="todoControlsAreActive$ | async" class="form-inline my-2 my-lg-0">
